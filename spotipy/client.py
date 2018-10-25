@@ -945,7 +945,13 @@ class Spotify(object):
             data['uris'] = uris
         if offset is not None:
             data['offset'] = offset
-        return self._put(self._append_device_id("me/player/play", device_id), payload=data)
+			
+        data = {"context_uri": context_uri,
+	    "offset": {"position": offset},
+        "position_ms": 0}
+        data['position_ms'] = 0
+        return self._put('me/player/play', payload=data)
+        #return self._put(self._append_device_id("me/player/play", device_id), payload=data)
 
     def pause_playback(self, device_id = None):
         ''' Pause user's playback.
